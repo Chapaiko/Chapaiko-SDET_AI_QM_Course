@@ -1,0 +1,23 @@
+{
+  "name": "chapaiko-sdet-ai-qm-course",
+  "version": "1.0.0",
+  "private": true,
+  "description": "UI test automation framework skeleton using TypeScript and Playwright.",
+  "scripts": {
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report reports/html"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.13.10",
+    "@typescript-eslint/eslint-plugin": "^8.26.0",
+    "@typescript-eslint/parser": "^8.26.0",
+    "dotenv": "^16.4.7",
+    "eslint": "^9.22.0",
+    "typescript": "^5.8.2"
+  }
+}
