@@ -14,6 +14,21 @@ This repository contains a maintainable end-to-end UI test framework based on:
 
 The framework is structured for clarity, typed code, and reusable test building blocks.
 
+## Example Site
+
+The current sample automation target is `https://automationexercise.com/`.
+
+Automation Exercise is a public demo e-commerce site designed for UI and API automation practice. It provides stable flows for common QA scenarios such as:
+
+- homepage validation
+- header navigation
+- products browsing
+- signup and login
+- cart and checkout practice
+- contact form and API testing exercises
+
+The sample framework currently uses the homepage and Products navigation as the initial smoke coverage.
+
 ## Project Structure
 
 ```text
@@ -70,6 +85,12 @@ Install Playwright browser binaries:
 npx playwright install chromium
 ```
 
+If you want to run additional browser projects later, install all default browsers:
+
+```bash
+npx playwright install chromium firefox webkit
+```
+
 ## Configuration
 
 The Playwright configuration is defined in `playwright.config.ts`.
@@ -78,7 +99,7 @@ The Playwright configuration is defined in `playwright.config.ts`.
 - Default browser project: `chromium`
 - HTML report output: `reports/html`
 - Test artifacts output: `test-results`
-- Default base URL: `https://playwright.dev`
+- Default base URL: `https://automationexercise.com`
 
 You can override the base URL with an environment variable:
 
@@ -104,7 +125,8 @@ The sample suite in `tests/e2e/home.spec.ts` demonstrates:
 - fixture-based test setup
 - page object usage through `HomePage`
 - component object usage through `HeaderComponent`
-- basic navigation validation
+- homepage visibility validation on Automation Exercise
+- header navigation from Home to Products
 
 ## Conventions
 
@@ -122,4 +144,5 @@ The current scaffold has been validated with:
 npx tsc --noEmit
 npm run lint
 npx playwright test --list
+npx playwright test tests/e2e/home.spec.ts
 ```
