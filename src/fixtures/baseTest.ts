@@ -2,12 +2,13 @@
 import { test as base, expect, type Page, type TestInfo } from '@playwright/test';
 
 import { HeaderComponent } from '../components/HeaderComponent';
-import { HomePage } from '../pages/HomePage';
+import { HomePage, ProductsPage } from '../pages/index';
 import { Logger } from '../utils/logger';
 
-type AppFixtures = {
+export type AppFixtures = {
   headerComponent: HeaderComponent;
   homePage: HomePage;
+  productsPage: ProductsPage;
 };
 
 export const test = base.extend<AppFixtures>({
@@ -16,6 +17,9 @@ export const test = base.extend<AppFixtures>({
   },
   homePage: async ({ page }, use) => {
     await use(new HomePage(page));
+  },
+  productsPage: async ({ page }, use) => {
+    await use(new ProductsPage(page));
   }
 });
 
