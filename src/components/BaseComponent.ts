@@ -6,6 +6,11 @@ import { expect } from '@playwright/test';
  * Provides shared behavior for reusable page components.
  */
 export abstract class BaseComponent {
+  /**
+   * Creates a reusable page component bound to the current page.
+   *
+   * @param page The current Playwright page instance.
+   */
   public constructor(protected readonly page: Page) {}
 
   /**

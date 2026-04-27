@@ -18,7 +18,7 @@ export default defineConfig({
     ['html', { open: 'never', outputFolder: 'reports/html' }]
   ],
   use: {
-    baseURL: EnvHelper.getString('BASE_URL', 'https://playwright.dev'),
+    baseURL: EnvHelper.getString('BASE_URL', 'https://automationexercise.com'),
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',

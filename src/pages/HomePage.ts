@@ -1,5 +1,5 @@
 // path: src/pages/HomePage.ts
-import { expect } from '@playwright/test';
+import { expect, type Locator } from '@playwright/test';
 
 import { ROUTES } from '../constants/routes';
 import { BasePage } from './BasePage';
@@ -13,23 +13,47 @@ export class HomePage extends BasePage {
    */
   public async open(): Promise<void> {
     await this.goto(ROUTES.home);
+    await this.acceptConsentIfVisible();
   }
 
   /**
    * Verifies that the home page is ready for interaction.
    */
   public async expectLoaded(): Promise<void> {
-    await expect(this.getStartedLink()).toBeVisible();
+    await expect(this.siteHeading()).toBeVisible();
+    await expect(this.homeLink()).toBeVisible();
+    await expect(this.productsLink()).toBeVisible();
+    await expect(this.heroBannerHeading()).toBeVisible();
+    await expect(this.featuredItemsHeading()).toBeVisible();
   }
 
-  /**
-   * Clicks the Get started call to action.
-   */
-  public async clickGetStarted(): Promise<void> {
-    await this.getStartedLink().click();
+  private async acceptConsentIfVisible(): Promise<void> {
+    const consentButton = this.page.getByRole('button', { name: 'Consent' });
+
+    if (await consentButton.isVisible().catch(() => false)) {
+      await consentButton.click();
+    }
   }
 
-  private getStartedLink() {
-    return this.page.getByRole('link', { name: 'Get started' });
+  private siteHeading(): Locator {
+    return this.page.getByRole('heading', { name: 'AutomationExercise', exact: true }).first();
+  }
+
+  private heroBannerHeading(): Locator {
+    return this.page.getByRole('heading', {
+      name: 'Full-Fledged practice website for Automation Engineers'
+    });
+  }
+
+  private featuredItemsHeading(): Locator {
+    return this.page.getByRole('heading', { name: 'Features Items' });
+  }
+
+  private homeLink(): Locator {
+    return this.page.getByRole('link', { name: 'Home' });
+  }
+
+  private productsLink(): Locator {
+    return this.page.getByRole('link', { name: 'Products' });
   }
 }

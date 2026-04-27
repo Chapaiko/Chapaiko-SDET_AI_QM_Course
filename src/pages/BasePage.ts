@@ -8,6 +8,11 @@ import { Logger } from '../utils/logger';
  * Provides common navigation and synchronization behavior for page objects.
  */
 export abstract class BasePage {
+  /**
+   * Creates a page object bound to the current page.
+   *
+   * @param page The current Playwright page instance.
+   */
   public constructor(protected readonly page: Page) {}
 
   /**

@@ -1,6 +1,7 @@
 // path: src/components/HeaderComponent.ts
-import { expect } from '@playwright/test';
+import { expect, type Locator } from '@playwright/test';
 
+import { ROUTES } from '../constants/routes';
 import { BaseComponent } from './BaseComponent';
 
 /**
@@ -8,27 +9,32 @@ import { BaseComponent } from './BaseComponent';
  */
 export class HeaderComponent extends BaseComponent {
   /**
-   * Verifies that the Docs navigation link is visible.
+   * Verifies that the primary navigation links are visible.
    */
-  public async expectDocsLinkVisible(): Promise<void> {
-    await this.expectVisible(this.docsLink());
+  public async expectNavigationVisible(): Promise<void> {
+    await this.expectVisible(this.homeLink());
+    await this.expectVisible(this.productsLink());
   }
 
   /**
-   * Clicks the Docs navigation link.
+   * Opens the Products page through the header navigation.
    */
-  public async clickDocs(): Promise<void> {
-    await this.docsLink().click();
+  public async openProducts(): Promise<void> {
+    await this.productsLink().click();
   }
 
   /**
-   * Verifies that the browser navigated to the documentation area.
+   * Verifies that the browser navigated to the Products page.
    */
-  public async expectDocsPageOpened(): Promise<void> {
-    await expect(this.page).toHaveURL(/\/docs\//);
+  public async expectProductsPageOpened(): Promise<void> {
+    await expect(this.page).toHaveURL(new RegExp(`${ROUTES.products}/?$`));
   }
 
-  private docsLink() {
-    return this.page.getByRole('link', { name: 'Docs' });
+  private homeLink(): Locator {
+    return this.page.getByRole('link', { name: 'Home' });
+  }
+
+  private productsLink(): Locator {
+    return this.page.getByRole('link', { name: 'Products' });
   }
 }
