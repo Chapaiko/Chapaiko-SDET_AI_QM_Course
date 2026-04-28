@@ -50,6 +50,15 @@ export class ProductsPage extends BasePage {
     await this.categorySidebar.openWomenDress();
   }
 
+  /**
+   * Opens the Kids Dress category from the products page sidebar.
+   */
+  public async openKidsDressCategory(): Promise<void> {
+    await this.categorySidebar.expectSidebarVisible();
+    await this.categorySidebar.openKidsCategory();
+    await this.categorySidebar.openKidsDress();
+  }
+
   private productsHeading() {
     return this.page.getByRole('heading', { name: 'All Products' });
   }

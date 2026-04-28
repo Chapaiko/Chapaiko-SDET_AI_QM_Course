@@ -27,11 +27,23 @@ export class CategoryProductsPage extends BasePage {
     await expect(this.femaleDressHeading()).toBeVisible();
   }
 
+  /**
+   * Verifies that the Kids dress category page is displayed.
+   */
+  public async expectKidsDressLoaded(): Promise<void> {
+    await this.expectUrl(/\/category_products\/4\/?$/);
+    await expect(this.kidsDressHeading()).toBeVisible();
+  }
+
   private maleTshirtsHeading() {
     return this.page.getByRole('heading', { name: /Men - Tshirts Products/i });
   }
 
   private femaleDressHeading() {
     return this.page.getByRole('heading', { name: /Women - Dress Products/i });
+  }
+
+  private kidsDressHeading() {
+    return this.page.getByRole('heading', { name: /Kids - Dress Products/i });
   }
 }

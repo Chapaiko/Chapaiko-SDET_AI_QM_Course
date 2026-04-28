@@ -44,6 +44,21 @@ export class CategorySidebarComponent extends BaseComponent {
     await this.dressLink().click();
   }
 
+  /**
+   * Opens the Kids category section.
+   */
+  public async openKidsCategory(): Promise<void> {
+    await this.kidsCategoryLink().click();
+    await expect(this.dressLink()).toBeVisible();
+  }
+
+  /**
+   * Opens the Dress subcategory under Kids.
+   */
+  public async openKidsDress(): Promise<void> {
+    await this.dressLink().click();
+  }
+
   private categoryHeading(): Locator {
     return this.page.getByRole('heading', { name: 'Category' });
   }
@@ -54,6 +69,10 @@ export class CategorySidebarComponent extends BaseComponent {
 
   private womenCategoryLink(): Locator {
     return this.page.getByRole('link', { name: /\bWomen$/i });
+  }
+
+  private kidsCategoryLink(): Locator {
+    return this.page.getByRole('link', { name: /\bKids$/i }).first();
   }
 
   private dressLink(): Locator {
