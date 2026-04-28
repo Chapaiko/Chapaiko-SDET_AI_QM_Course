@@ -42,11 +42,12 @@ export class ProductsPage extends BasePage {
   }
 
   /**
-   * Verifies that the Men Tshirts category page is displayed.
+   * Opens the Women Dress category from the products page sidebar.
    */
-  public async expectMenTshirtsLoaded(): Promise<void> {
-    await this.expectUrl(/\/category_products\//);
-    await expect(this.menTshirtsHeading()).toBeVisible();
+  public async openWomenDressCategory(): Promise<void> {
+    await this.categorySidebar.expectSidebarVisible();
+    await this.categorySidebar.openWomenCategory();
+    await this.categorySidebar.openWomenDress();
   }
 
   private productsHeading() {
@@ -57,7 +58,4 @@ export class ProductsPage extends BasePage {
     return this.page.getByRole('link', { name: 'Products' });
   }
 
-  private menTshirtsHeading() {
-    return this.page.getByRole('heading', { name: /Men - Tshirts Products/i });
-  }
 }

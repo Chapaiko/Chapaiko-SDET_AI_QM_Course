@@ -1,5 +1,5 @@
 // path: tests/e2e/home.spec.ts
-import type { HomePage } from '../../src/pages/index';
+import type { HomePage } from '../../src/pages/HomePage';
 import { test } from '../../src/fixtures/baseTest';
 
 type HomePageFixtures = {

@@ -29,12 +29,35 @@ export class CategorySidebarComponent extends BaseComponent {
     await this.tshirtsLink().click();
   }
 
+  /**
+   * Opens the Women category section.
+   */
+  public async openWomenCategory(): Promise<void> {
+    await this.womenCategoryLink().click();
+    await expect(this.dressLink()).toBeVisible();
+  }
+
+  /**
+   * Opens the Dress subcategory under Women.
+   */
+  public async openWomenDress(): Promise<void> {
+    await this.dressLink().click();
+  }
+
   private categoryHeading(): Locator {
     return this.page.getByRole('heading', { name: 'Category' });
   }
 
   private menCategoryLink(): Locator {
     return this.page.getByRole('link', { name: /\bMen$/i });
+  }
+
+  private womenCategoryLink(): Locator {
+    return this.page.getByRole('link', { name: /\bWomen$/i });
+  }
+
+  private dressLink(): Locator {
+    return this.page.getByRole('link', { name: /^Dress$/i });
   }
 
   private tshirtsLink(): Locator {

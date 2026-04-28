@@ -2,16 +2,22 @@
 import { test as base, expect, type Page, type TestInfo } from '@playwright/test';
 
 import { HeaderComponent } from '../components/HeaderComponent';
-import { HomePage, ProductsPage } from '../pages/index';
+import { CategoryProductsPage } from '../pages/CategoryProductsPage';
+import { HomePage } from '../pages/HomePage';
+import { ProductsPage } from '../pages/ProductsPage';
 import { Logger } from '../utils/logger';
 
 export type AppFixtures = {
+  categoryProductsPage: CategoryProductsPage;
   headerComponent: HeaderComponent;
   homePage: HomePage;
   productsPage: ProductsPage;
 };
 
 export const test = base.extend<AppFixtures>({
+  categoryProductsPage: async ({ page }, use) => {
+    await use(new CategoryProductsPage(page));
+  },
   headerComponent: async ({ page }, use) => {
     await use(new HeaderComponent(page));
   },
