@@ -1,17 +1,22 @@
+// path: tests/e2e/login.spec.ts
 import type { Page } from '@playwright/test';
 
+import { HeaderComponent } from '../../src/components/HeaderComponent';
+import type { AccountInformationPage } from '../../src/pages/AccountInformationPage';
+import type { AccountStatusPage } from '../../src/pages/AccountStatusPage';
+import type { HomePage } from '../../src/pages/HomePage';
+import type { SignupLoginPage } from '../../src/pages/SignupLoginPage';
 import type { SignupAccount } from '../../src/test-data/accountData';
-
-import type { AppFixtures } from '../../src/fixtures/baseTest';
 
 import { test } from '../../src/fixtures/baseTest';
 import { buildSignupAccount } from '../../src/test-data/accountData';
 
-type LoginFixtures = Pick<
-  AppFixtures,
-  'accountInformationPage' | 'accountStatusPage' | 'headerComponent' | 'homePage' | 'signupLoginPage'
-> & {
+type LoginFixtures = {
+  accountInformationPage: AccountInformationPage;
+  accountStatusPage: AccountStatusPage;
+  homePage: HomePage;
   page: Page;
+  signupLoginPage: SignupLoginPage;
 };
 
 /**
@@ -24,17 +29,16 @@ test.describe('Login page', () => {
   test('should login with valid credentials and delete account', async ({
     accountInformationPage,
     accountStatusPage,
-    headerComponent,
     homePage,
     page,
     signupLoginPage
   }: LoginFixtures) => {
     const account = buildSignupAccount();
+    const headerComponent = new HeaderComponent(page);
 
     await createAccount(account, {
       accountInformationPage,
       accountStatusPage,
-      headerComponent,
       homePage,
       page,
       signupLoginPage
@@ -57,12 +61,13 @@ async function createAccount(
   {
     accountInformationPage,
     accountStatusPage,
-    headerComponent,
     homePage,
     page,
     signupLoginPage
   }: LoginFixtures
 ): Promise<void> {
+  const headerComponent = new HeaderComponent(page);
+
   await homePage.open();
   await homePage.expectLoaded();
   await headerComponent.openSignupLogin();

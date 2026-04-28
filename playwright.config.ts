@@ -19,6 +19,7 @@ export default defineConfig({
   ],
   use: {
     baseURL: EnvHelper.getString('BASE_URL', 'https://automationexercise.com'),
+    testIdAttribute: 'data-qa',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',

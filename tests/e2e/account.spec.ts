@@ -1,7 +1,9 @@
 // path: tests/e2e/account.spec.ts
+import type { Page } from '@playwright/test';
+
+import { HeaderComponent } from '../../src/components/HeaderComponent';
 import type { AccountInformationPage } from '../../src/pages/AccountInformationPage';
 import type { AccountStatusPage } from '../../src/pages/AccountStatusPage';
-import type { HeaderComponent } from '../../src/components/HeaderComponent';
 import type { HomePage } from '../../src/pages/HomePage';
 import type { SignupLoginPage } from '../../src/pages/SignupLoginPage';
 
@@ -11,8 +13,8 @@ import { buildSignupAccount } from '../../src/test-data/accountData';
 type AccountFixtures = {
   accountInformationPage: AccountInformationPage;
   accountStatusPage: AccountStatusPage;
-  headerComponent: HeaderComponent;
   homePage: HomePage;
+  page: Page;
   signupLoginPage: SignupLoginPage;
 };
 
@@ -26,11 +28,12 @@ test.describe('Account signup', () => {
   test('should create and delete account', async ({
     accountInformationPage,
     accountStatusPage,
-    headerComponent,
     homePage,
+    page,
     signupLoginPage
   }: AccountFixtures) => {
     const account = buildSignupAccount();
+    const headerComponent = new HeaderComponent(page);
 
     await homePage.open();
     await homePage.expectLoaded();

@@ -48,6 +48,10 @@ export class HeaderComponent extends BaseComponent {
    * Verifies that the current user is shown as logged in.
    */
   public async expectLoggedInAs(name: string): Promise<void> {
+    if (name == null) {
+      throw new Error('User name is required to verify the logged in banner.');
+    }
+
     await expect(this.page.getByRole('banner')).toContainText(`Logged in as ${name}`);
   }
 

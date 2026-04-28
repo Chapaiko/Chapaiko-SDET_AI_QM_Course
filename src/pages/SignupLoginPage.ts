@@ -1,5 +1,5 @@
 // path: src/pages/SignupLoginPage.ts
-import { expect, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 
 import { BasePage } from './BasePage';
 
@@ -29,6 +29,10 @@ export class SignupLoginPage extends BasePage {
    * Starts the signup flow with a name and email address.
    */
   public async signUp(name: string, email: string): Promise<void> {
+    if (name == null || email == null) {
+      throw new Error('Name and email are required to sign up.');
+    }
+
     await this.nameInput().fill(name);
     await this.signupEmailInput().fill(email);
     await this.signupButton().click();
@@ -38,40 +42,44 @@ export class SignupLoginPage extends BasePage {
    * Logs in with an existing account.
    */
   public async login(email: string, password: string): Promise<void> {
+    if (email == null || password == null) {
+      throw new Error('Email and password are required to log in.');
+    }
+
     await this.loginEmailInput().fill(email);
     await this.passwordInput().fill(password);
     await this.loginButton().click();
   }
 
-  private loginToYourAccountHeading() {
+  private loginToYourAccountHeading(): Locator {
     return this.page.getByRole('heading', { name: 'Login to your account' });
   }
 
-  private newUserSignupHeading() {
+  private newUserSignupHeading(): Locator {
     return this.page.getByRole('heading', { name: 'New User Signup!' });
   }
 
-  private loginEmailInput() {
-    return this.page.getByRole('textbox', { name: 'Email Address' }).first();
+  private loginEmailInput(): Locator {
+    return this.page.getByTestId('login-email');
   }
 
-  private passwordInput() {
-    return this.page.getByRole('textbox', { name: 'Password' });
+  private passwordInput(): Locator {
+    return this.page.getByTestId('login-password');
   }
 
-  private loginButton() {
-    return this.page.getByRole('button', { name: 'Login' });
+  private loginButton(): Locator {
+    return this.page.getByTestId('login-button');
   }
 
-  private nameInput() {
-    return this.page.getByRole('textbox', { name: 'Name' });
+  private nameInput(): Locator {
+    return this.page.getByTestId('signup-name');
   }
 
-  private signupEmailInput() {
-    return this.page.getByRole('textbox', { name: 'Email Address' }).nth(1);
+  private signupEmailInput(): Locator {
+    return this.page.getByTestId('signup-email');
   }
 
-  private signupButton() {
-    return this.page.getByRole('button', { name: 'Signup' });
+  private signupButton(): Locator {
+    return this.page.getByTestId('signup-button');
   }
 }
