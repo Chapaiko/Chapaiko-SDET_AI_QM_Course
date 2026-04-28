@@ -56,4 +56,19 @@ test.describe('Products page', () => {
     await productsPage.openKidsDressCategory();
     await categoryProductsPage.expectKidsDressLoaded();
   });
+
+  /**
+   * Verifies that the user can navigate between product categories from Men Tshirts to Female dress and then Kids dress.
+   */
+  test('should navigate between products', async ({ homePage, productsPage, categoryProductsPage }: ProductsPageFixtures) => {
+    await homePage.open();
+    await productsPage.openFromHeader();
+    await productsPage.expectLoaded();
+    await productsPage.openMenTshirtsCategory();
+    await categoryProductsPage.expectMaleTshirtsLoaded();
+    await categoryProductsPage.openWomenDressCategory();
+    await categoryProductsPage.expectFemaleDressLoaded();
+    await categoryProductsPage.openKidsDressCategory();
+    await categoryProductsPage.expectKidsDressLoaded();
+  });
 });

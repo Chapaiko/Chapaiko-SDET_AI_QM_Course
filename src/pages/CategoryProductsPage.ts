@@ -1,14 +1,36 @@
 // path: src/pages/CategoryProductsPage.ts
 import { expect, type Page } from '@playwright/test';
 
+import { CategorySidebarComponent } from '../components/CategorySidebarComponent';
 import { BasePage } from './BasePage';
 
 /**
  * Models category-based product listing pages.
  */
 export class CategoryProductsPage extends BasePage {
+  private readonly categorySidebar: CategorySidebarComponent;
+
   public constructor(page: Page) {
     super(page);
+    this.categorySidebar = new CategorySidebarComponent(page);
+  }
+
+  /**
+   * Opens the Women Dress category from a category products page.
+   */
+  public async openWomenDressCategory(): Promise<void> {
+    await this.categorySidebar.expectSidebarVisible();
+    await this.categorySidebar.openWomenCategory();
+    await this.categorySidebar.openWomenDress();
+  }
+
+  /**
+   * Opens the Kids Dress category from a category products page.
+   */
+  public async openKidsDressCategory(): Promise<void> {
+    await this.categorySidebar.expectSidebarVisible();
+    await this.categorySidebar.openKidsCategory();
+    await this.categorySidebar.openKidsDress();
   }
 
   /**
