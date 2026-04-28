@@ -2,21 +2,33 @@
 import { test as base, expect, type Page, type TestInfo } from '@playwright/test';
 
 import { HeaderComponent } from '../components/HeaderComponent';
+import { AccountInformationPage } from '../pages/AccountInformationPage';
+import { AccountStatusPage } from '../pages/AccountStatusPage';
 import { CartPage } from '../pages/CartPage';
 import { CategoryProductsPage } from '../pages/CategoryProductsPage';
 import { HomePage } from '../pages/HomePage';
 import { ProductsPage } from '../pages/ProductsPage';
+import { SignupLoginPage } from '../pages/SignupLoginPage';
 import { Logger } from '../utils/logger';
 
 export type AppFixtures = {
+  accountInformationPage: AccountInformationPage;
+  accountStatusPage: AccountStatusPage;
   cartPage: CartPage;
   categoryProductsPage: CategoryProductsPage;
   headerComponent: HeaderComponent;
   homePage: HomePage;
   productsPage: ProductsPage;
+  signupLoginPage: SignupLoginPage;
 };
 
 export const test = base.extend<AppFixtures>({
+  accountInformationPage: async ({ page }, use) => {
+    await use(new AccountInformationPage(page));
+  },
+  accountStatusPage: async ({ page }, use) => {
+    await use(new AccountStatusPage(page));
+  },
   cartPage: async ({ page }, use) => {
     await use(new CartPage(page));
   },
@@ -31,6 +43,9 @@ export const test = base.extend<AppFixtures>({
   },
   productsPage: async ({ page }, use) => {
     await use(new ProductsPage(page));
+  },
+  signupLoginPage: async ({ page }, use) => {
+    await use(new SignupLoginPage(page));
   }
 });
 

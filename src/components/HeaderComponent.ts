@@ -31,6 +31,27 @@ export class HeaderComponent extends BaseComponent {
   }
 
   /**
+   * Opens the Signup / Login page through the header navigation.
+   */
+  public async openSignupLogin(): Promise<void> {
+    await this.signupLoginLink().click();
+  }
+
+  /**
+   * Opens the Delete Account page through the header navigation.
+   */
+  public async openDeleteAccount(): Promise<void> {
+    await this.deleteAccountLink().click();
+  }
+
+  /**
+   * Verifies that the current user is shown as logged in.
+   */
+  public async expectLoggedInAs(name: string): Promise<void> {
+    await expect(this.page.getByRole('banner')).toContainText(`Logged in as ${name}`);
+  }
+
+  /**
    * Verifies that the browser navigated to the Products page.
    */
   public async expectProductsPageOpened(): Promise<void> {
@@ -48,4 +69,13 @@ export class HeaderComponent extends BaseComponent {
   private cartLink(): Locator {
     return this.page.getByRole('link', { name: 'Cart' });
   }
+
+  private signupLoginLink(): Locator {
+    return this.page.getByRole('link', { name: 'Signup / Login' });
+  }
+
+  private deleteAccountLink(): Locator {
+    return this.page.getByRole('link', { name: 'Delete Account' });
+  }
+
 }
