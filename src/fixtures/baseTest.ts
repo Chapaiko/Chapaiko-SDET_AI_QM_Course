@@ -2,12 +2,14 @@
 import { test as base, expect, type Page, type TestInfo } from '@playwright/test';
 
 import { HeaderComponent } from '../components/HeaderComponent';
+import { CartPage } from '../pages/CartPage';
 import { CategoryProductsPage } from '../pages/CategoryProductsPage';
 import { HomePage } from '../pages/HomePage';
 import { ProductsPage } from '../pages/ProductsPage';
 import { Logger } from '../utils/logger';
 
 export type AppFixtures = {
+  cartPage: CartPage;
   categoryProductsPage: CategoryProductsPage;
   headerComponent: HeaderComponent;
   homePage: HomePage;
@@ -15,6 +17,9 @@ export type AppFixtures = {
 };
 
 export const test = base.extend<AppFixtures>({
+  cartPage: async ({ page }, use) => {
+    await use(new CartPage(page));
+  },
   categoryProductsPage: async ({ page }, use) => {
     await use(new CategoryProductsPage(page));
   },

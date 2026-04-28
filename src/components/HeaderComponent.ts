@@ -24,6 +24,13 @@ export class HeaderComponent extends BaseComponent {
   }
 
   /**
+   * Opens the Cart page through the header navigation.
+   */
+  public async openCart(): Promise<void> {
+    await this.cartLink().click();
+  }
+
+  /**
    * Verifies that the browser navigated to the Products page.
    */
   public async expectProductsPageOpened(): Promise<void> {
@@ -36,5 +43,9 @@ export class HeaderComponent extends BaseComponent {
 
   private productsLink(): Locator {
     return this.page.getByRole('link', { name: 'Products' });
+  }
+
+  private cartLink(): Locator {
+    return this.page.getByRole('link', { name: 'Cart' });
   }
 }

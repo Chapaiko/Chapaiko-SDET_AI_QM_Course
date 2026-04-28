@@ -1,11 +1,14 @@
 // path: tests/e2e/products.spec.ts
+import type { CartPage } from '../../src/pages/CartPage';
 import type { CategoryProductsPage } from '../../src/pages/CategoryProductsPage';
 import type { HomePage } from '../../src/pages/HomePage';
 import type { ProductsPage } from '../../src/pages/ProductsPage';
 
 import { test } from '../../src/fixtures/baseTest';
+import { cartProducts } from '../../src/test-data/productData';
 
 type ProductsPageFixtures = {
+  cartPage: CartPage;
   categoryProductsPage: CategoryProductsPage;
   homePage: HomePage;
   productsPage: ProductsPage;
@@ -70,5 +73,38 @@ test.describe('Products page', () => {
     await categoryProductsPage.expectFemaleDressLoaded();
     await categoryProductsPage.openKidsDressCategory();
     await categoryProductsPage.expectKidsDressLoaded();
+  });
+
+  /**
+   * Verifies that the user can add a product to the cart and see the correct cart values.
+   */
+  test('should add product to cart', async ({ cartPage, homePage, productsPage }: ProductsPageFixtures) => {
+    await homePage.open();
+    await productsPage.openFromHeader();
+    await productsPage.expectLoaded();
+    await productsPage.hoverProduct(cartProducts.blueTop);
+    await productsPage.addProductToCart(cartProducts.blueTop);
+    await productsPage.viewCartFromModal();
+    await cartPage.expectLoaded();
+    await cartPage.expectProductAdded(cartProducts.blueTop, 0);
+  });
+
+  /**
+   * Verifies that the user can add several products to the cart and see the correct cart values.
+   */
+  test('should add several products to cart', async ({ cartPage, homePage, productsPage }: ProductsPageFixtures) => {
+    await homePage.open();
+    await productsPage.openFromHeader();
+    await productsPage.expectLoaded();
+    await productsPage.hoverProduct(cartProducts.blueTop);
+    await productsPage.addProductToCart(cartProducts.blueTop);
+    await productsPage.continueShoppingFromModal();
+    await productsPage.hoverProduct(cartProducts.menTshirt);
+    await productsPage.addProductToCart(cartProducts.menTshirt);
+    await productsPage.continueShoppingFromModal();
+    await productsPage.openCartFromHeader();
+    await cartPage.expectLoaded();
+    await cartPage.expectProductAdded(cartProducts.blueTop, 0);
+    await cartPage.expectProductAdded(cartProducts.menTshirt, 1);
   });
 });
